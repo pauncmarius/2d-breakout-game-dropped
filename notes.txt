@@ -1,1 +1,3 @@
 Welcome!
+-setting up project to work with opengl:
+https://www.glfw.org/documentation.html
