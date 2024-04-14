@@ -19,8 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\res\glad.c" />
-    <ClCompile Include="source\Source.cpp" />
+    <ClCompile Include="libraries\resource headers\glad.c" />
+    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\Renderer.cpp" />
+    <ClCompile Include="source\Shader.cpp" />
+    <ClCompile Include="source\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="source\shaders\fragmentShader.frag" />
+    <None Include="source\shaders\vertexShader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
