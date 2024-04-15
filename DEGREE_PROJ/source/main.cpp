@@ -1,6 +1,6 @@
-#include "Window.cpp"
-#include "Shader.cpp"
-#include "Renderer.cpp"
+#include "Window.h"
+#include "Shader.h"
+#include "Renderer.h"
 
 int main() {
     try {

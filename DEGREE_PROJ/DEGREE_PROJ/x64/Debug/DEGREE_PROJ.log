@@ -1,25 +1,8 @@
-﻿  main.cpp
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\Shader.cpp(26,40): warning C4101: 'e': unreferenced local variable
-  (compiling source file 'source/main.cpp')
-  
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\Shader.cpp(7,14): error C2011: 'Shader': 'class' type redefinition
-  (compiling source file 'source/main.cpp')
-  C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\Shader.cpp(7,7):
-  see declaration of 'Shader'
-  
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\Renderer.cpp(29,9): error C2027: use of undefined type 'Shader'
-  (compiling source file 'source/main.cpp')
-  C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\Shader.cpp(7,7):
-  see declaration of 'Shader'
-  
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(8,16): error C2079: 'shader' uses undefined class 'Shader'
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(8,22): error C2440: 'initializing': cannot convert from 'initializer list' to 'int'
-  C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(8,22):
-  The initializer contains too many elements
-  
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(15,21): error C2664: 'void Renderer::draw(Shader &)': cannot convert argument 1 from 'int' to 'Shader &'
-  C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\Renderer.cpp(28,10):
-  see declaration of 'Renderer::draw'
-  C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(15,21):
-  while trying to match the argument list '(int)'
-  
+﻿  glad.c
+  main.cpp
+  Renderer.cpp
+  Shader.cpp
+  Window.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  DEGREE_PROJ.vcxproj -> C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\x64\Debug\DEGREE_PROJ.exe
