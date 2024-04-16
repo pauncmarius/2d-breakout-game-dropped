@@ -1,3 +1,4 @@
+//shadersources.h
 #ifndef SHADER_SOURCES_H
 #define SHADER_SOURCES_H
 
@@ -15,7 +16,7 @@ namespace ShaderSources {
         #version 330 core
         out vec4 FragColor;
         void main() {
-            FragColor = vec4(0.0f, 0.4f, 0.8f, 1.0f);
+            FragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
         }
     )glsl";
 }

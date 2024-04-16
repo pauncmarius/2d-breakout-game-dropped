@@ -1,7 +1,14 @@
+//shader.cpp
 #include "Shader.h"
 #include <iostream>
 
 Shader::Shader(const char* vertexCode, const char* fragmentCode) {
+    static bool firstTime = true;
+    if (firstTime) {
+        std::cout << "Creating Shader..." << std::endl;
+        firstTime = false; // Set false to avoid repeating this message
+    }
+
     // Compile shaders
     unsigned int vertex, fragment;
     vertex = glCreateShader(GL_VERTEX_SHADER);
@@ -14,6 +21,7 @@ Shader::Shader(const char* vertexCode, const char* fragmentCode) {
     glCompileShader(fragment);
     checkCompileErrors(fragment, "FRAGMENT");
 
+    // Linking shaders into a program
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
@@ -25,12 +33,19 @@ Shader::Shader(const char* vertexCode, const char* fragmentCode) {
 }
 
 Shader::~Shader() {
-    glDeleteProgram(ID);
+    std::cout << "Deleting Shader program ID: " << ID << std::endl;
 }
 
 void Shader::use() {
+    static bool firstUse = true;
+    if (firstUse) {
+        std::cout << "Using Shader program ID: " << ID << std::endl;
+        firstUse = false; // Set false to avoid repeating this message
+    }
     glUseProgram(ID);
 }
+
+
 
 void Shader::checkCompileErrors(unsigned int shader, const std::string& type) {
     GLint success;
