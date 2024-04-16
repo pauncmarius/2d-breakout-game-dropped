@@ -3,17 +3,23 @@
 
 #include <glad/glad.h>
 #include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
 
 class Shader {
 public:
-    unsigned int ID;
+    unsigned int ID;  // Shader program ID
 
-    Shader(const char* vertexPath, const char* fragmentPath);
+    // Constructor that builds the shader program from shader source code strings
+    Shader(const char* vertexCode, const char* fragmentCode);
+
+    // Destructor
+    ~Shader();
+
+    // Use/activate the shader program
     void use();
-    void checkCompileErrors(GLuint shader, std::string type);
+
+private:
+    // Utility method for checking shader compilation/linking errors.
+    void checkCompileErrors(unsigned int shader, const std::string& type);
 };
 
 #endif // SHADER_H

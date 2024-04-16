@@ -15,19 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="libraries\resource headers\glad.c">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Renderer.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="libraries\resource headers\glad.c">
+      <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="source\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Window.cpp">
+    <ClCompile Include="source\Triangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -40,13 +37,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="source\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="source\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Window.h">
+    <ClInclude Include="source\Triangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
