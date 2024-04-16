@@ -25,11 +25,8 @@
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
     </ClCompile>
     <ClCompile Include="source\Shader.cpp" />
+    <ClCompile Include="source\ShaderSources.h" />
     <ClCompile Include="source\Triangle.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="source\shaders\fragmentShader.frag" />
-    <None Include="source\shaders\vertexShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Shader.h" />
