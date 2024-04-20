@@ -26,11 +26,12 @@
     </ClCompile>
     <ClCompile Include="source\Shader.cpp" />
     <ClCompile Include="source\ShaderSources.h" />
-    <ClCompile Include="source\Triangle.cpp" />
+    <ClCompile Include="source\Rectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Mat4.h" />
     <ClInclude Include="source\Shader.h" />
-    <ClInclude Include="source\Triangle.h" />
+    <ClInclude Include="source\Rectangle.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

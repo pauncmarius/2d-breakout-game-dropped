@@ -24,7 +24,7 @@
     <ClCompile Include="source\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="source\Triangle.cpp">
+    <ClCompile Include="source\Rectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="source\ShaderSources.h">
@@ -35,8 +35,11 @@
     <ClInclude Include="source\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="source\Triangle.h">
+    <ClInclude Include="source\Rectangle.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\Mat4.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
