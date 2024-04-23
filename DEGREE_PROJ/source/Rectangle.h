@@ -1,3 +1,4 @@
+// Rectangle.h
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
 
@@ -5,11 +6,9 @@
 
 class Rectangle {
 public:
-    unsigned int VAO;
-
-    Rectangle(float x, float y, float width, float height);
+    unsigned int VAO, VBO;
+    Rectangle(float width, float height);
     ~Rectangle();
-
     void draw();
 };
 

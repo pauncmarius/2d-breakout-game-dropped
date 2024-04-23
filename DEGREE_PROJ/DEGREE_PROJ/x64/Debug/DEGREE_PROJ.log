@@ -1,2 +1,4 @@
 ﻿  main.cpp
+C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(60,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(61,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   DEGREE_PROJ.vcxproj -> C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\x64\Debug\DEGREE_PROJ.exe

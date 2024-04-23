@@ -1,43 +1,94 @@
-#include <glad/glad.h>
+﻿#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "Shader.h"
 #include "Rectangle.h"
-#include "Mat4.h"
+#include <vector>
 #include "ShaderSources.h"
 
+std::vector<std::vector<int>> matrix = {
+    {1, 0, 1, 0, 1, 0},
+    {0, 1, 0, 1, 0, 1},
+    {1, 0, 1, 0, 1, 0},
+    {0, 1, 0, 1, 0, 1},
+    {1, 0, 1, 0, 1, 0},
+    {0, 1, 0, 1, 0, 1},
+    {1, 0, 1, 0, 1, 0},
+    {0, 1, 0, 1, 0, 1},
+    {1, 0, 1, 0, 1, 0},
+    {0, 1, 0, 1, 0, 1},
+    {1, 0, 1, 0, 1, 0},
+    {0, 1, 0, 1, 0, 1}
+};
+
 int main() {
-    glfwInit();
+    // Inițializarea GLFW
+    if (!glfwInit()) {
+        std::cerr << "Failed to initialize GLFW\n";
+        return -1;
+    }
+
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Five Rectangles", nullptr, nullptr);
+
+    // Crearea ferestrei
+    int width = 800, height = 600;
+    GLFWwindow* window = glfwCreateWindow(width, height, "Test Matrix Filling", nullptr, nullptr);
     if (!window) {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        std::cerr << "Failed to create GLFW window\n";
         glfwTerminate();
         return -1;
     }
+
     glfwMakeContextCurrent(window);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cout << "Failed to initialize GLAD" << std::endl;
+        std::cerr << "Failed to initialize GLAD\n";
+        glfwTerminate();
         return -1;
     }
 
+    // Configurarea shader-ului și a dreptunghiurilor
     Shader shaderProgram(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource);
-    Rectangle rectangle(-0.1f, -0.2f, 0.2f, 0.4f);  // A rectangle prototype
-
     shaderProgram.use();
-    float offset = 0.25f; // Space between the centers of the rectangles
+    unsigned int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
+    Rectangle rectangle(1.0f, 1.0f);
+
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+
+    // Loop-ul de redare
     while (!glfwWindowShouldClose(window)) {
+        glfwGetFramebufferSize(window, &width, &height);
+        glViewport(0, 0, width, height);
         glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        Mat4 baseModel;
-        for (int i = 0; i < 5; i++) {
-            Mat4 model = Mat4::translate(baseModel, -0.5f + i * offset, 0.0f);
-            unsigned int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, model.ptr());
-            rectangle.draw();
+        float cellWidth = static_cast<float>(width) / cols;
+        float cellHeight = static_cast<float>(height) / rows;
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (matrix[i][j] == 1) {
+                    glm::mat4 model = glm::mat4(1.0f);
+                    model = glm::translate(model, glm::vec3(
+                        -1.0f + 2.0f * (j) / cols,  // Centrarea fiecărui dreptunghi
+                        1.0f - 2.0f * (i + 1.0f) / rows,  // in mijlocul celulei sale
+                        0.0f
+                    ));
+                    model = glm::scale(model, glm::vec3(
+                        2.0f / cols,   // Scalați pentru a umple celula
+                        2.0f / rows,   // fără a depăși
+                        1.0f
+                    ));
+
+                    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+                    rectangle.draw();
+                }
+            }
         }
 
         glfwSwapBuffers(window);
