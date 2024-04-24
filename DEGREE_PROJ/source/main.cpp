@@ -19,6 +19,13 @@ std::vector<std::vector<int>> matrix = {
     {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
     {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
     {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+    {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+    {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
+    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -39,7 +46,7 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Crearea ferestrei
-    int width = 1152, height = 600;
+    int width = 800, height = 800;
     GLFWwindow* window = glfwCreateWindow(width, height, "Test", nullptr, nullptr);
     if (!window) {
         std::cerr << "Failed to create GLFW window\n";
@@ -63,7 +70,7 @@ int main() {
     Rectangle rectangle(1.0f, 1.0f);
 
     // Initialize Circle
-    Circle circle(0.3f, 36);  // Create a circle with initial radius 0.5 and 36 segments
+    Circle circle(0.04f, 36);  // Create a circle with initial radius 0.5 and 36 segments
     glfwSetWindowUserPointer(window, &circle);
 
     int rows = matrix.size();
@@ -106,11 +113,13 @@ int main() {
                 }
             }
         }
+        glm::mat4 model = glm::mat4(1.0f);
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
         // Resetare sau setare culoare diferită pentru bloc
         glm::vec4 circleColor(0.0f, 0.0f, 1.0f, 1.0f); // Albastru
         unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
         glUniform4f(colorLoc, circleColor.r, circleColor.g, circleColor.b, circleColor.a);
-        glm::vec3 circleTranslation(-4.5f, -4.1f, 0.0f); // Move circle to bottom center
+        glm::vec3 circleTranslation(0.0f, -0.9f, 0.0f); // Move circle to bottom center
         unsigned int circleTransLoc = glGetUniformLocation(shaderProgram.ID, "translation");
         glUniform3f(circleTransLoc, circleTranslation.x, circleTranslation.y, circleTranslation.z);
         circle.draw();  // Draw the circle
