@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libraries\resource headers\glad.c" />
+    <ClCompile Include="source\Circle.cpp" />
     <ClCompile Include="source\main.cpp">
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
@@ -29,6 +30,7 @@
     <ClCompile Include="source\Rectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="source\Circle.h" />
     <ClInclude Include="source\Shader.h" />
     <ClInclude Include="source\Rectangle.h" />
   </ItemGroup>
