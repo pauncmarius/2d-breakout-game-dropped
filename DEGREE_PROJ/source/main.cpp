@@ -1,4 +1,5 @@
-﻿#include <glad/glad.h>
+﻿//main.cpp
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <glm/glm.hpp>
@@ -25,10 +26,6 @@ std::vector<std::vector<int>> matrix = {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
-void window_size_callback(GLFWwindow* window, int width, int height) {
-    std::cout << "Window size changed: " << width << " x " << height << std::endl;
-    glViewport(0, 0, width, height);
-}
 
 int main() {
     // Inițializarea GLFW
@@ -50,7 +47,6 @@ int main() {
         return -1;
     }
 
-    glfwSetWindowSizeCallback(window, window_size_callback);
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -62,9 +58,13 @@ int main() {
     // Configurarea shader-ului și a dreptunghiurilor
     Shader shaderProgram(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource);
     shaderProgram.use();
+
     unsigned int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
     Rectangle rectangle(1.0f, 1.0f);
-    Circle ball(0.5f, 36);
+
+    // Initialize Circle
+    Circle circle(0.3f, 36);  // Create a circle with initial radius 0.5 and 36 segments
+    glfwSetWindowUserPointer(window, &circle);
 
     int rows = matrix.size();
     int cols = matrix[0].size();
@@ -95,12 +95,25 @@ int main() {
                     ));
 
                     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-                    rectangle.draw();
+                    // Reset translation for the rectangle (or set a different one)
+                    glm::vec4 rectangleColor(1.0f, 0.0f, 0.0f, 1.0f); // Roșu
+                    glm::vec3 rectangleTranslation(0.0f, 0.0f, 0.0f); // No translation for rectangle
+                    unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
+                    unsigned int rectTransLoc = glGetUniformLocation(shaderProgram.ID, "translation");
+                    glUniform3f(rectTransLoc, rectangleTranslation.x, rectangleTranslation.y, rectangleTranslation.z);
+                    glUniform4f(colorLoc, rectangleColor.r, rectangleColor.g, rectangleColor.b, rectangleColor.a);
+                    rectangle.draw();  // Draw the rectangle
                 }
             }
         }
-
-        ball.draw();
+        // Resetare sau setare culoare diferită pentru bloc
+        glm::vec4 circleColor(0.0f, 0.0f, 1.0f, 1.0f); // Albastru
+        unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
+        glUniform4f(colorLoc, circleColor.r, circleColor.g, circleColor.b, circleColor.a);
+        glm::vec3 circleTranslation(-4.5f, -4.1f, 0.0f); // Move circle to bottom center
+        unsigned int circleTransLoc = glGetUniformLocation(shaderProgram.ID, "translation");
+        glUniform3f(circleTransLoc, circleTranslation.x, circleTranslation.y, circleTranslation.z);
+        circle.draw();  // Draw the circle
 
         glfwSwapBuffers(window);
         glfwPollEvents();
