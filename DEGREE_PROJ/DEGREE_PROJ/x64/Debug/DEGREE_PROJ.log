@@ -2,6 +2,4 @@
 C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\ShaderSources.h(21,1): warning C4566: character represented by universal-character-name '\u0103' cannot be represented in the current code page (1252)
   (compiling source file 'source/main.cpp')
   
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(76,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(77,14): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   DEGREE_PROJ.vcxproj -> C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\x64\Debug\DEGREE_PROJ.exe

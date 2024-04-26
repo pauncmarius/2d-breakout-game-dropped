@@ -11,6 +11,12 @@
 #include "ShaderSources.h"
 #include "Circle.h"
 
+// Constante pentru dimensiuni și culori
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 800;
+const glm::vec4 BACKGROUND_COLOR(0.2f, 0.3f, 0.3f, 1.0f);
+const glm::vec4 DRAWING_AREA_COLOR(0.1f, 0.1f, 0.1f, 1.0f);
+
 std::vector<std::vector<int>> matrix = {
     {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
     {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
@@ -33,33 +39,41 @@ std::vector<std::vector<int>> matrix = {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
 
+void setupViewport(int width, int height) {
+    int viewportSize = std::min(width, height);
+    int xOffset = (width - viewportSize) / 2;
+    int yOffset = (height - viewportSize) / 2;
+    glViewport(xOffset, yOffset, viewportSize, viewportSize);
+    glScissor(xOffset, yOffset, viewportSize, viewportSize);
+}
 
-int main() {
-    // Inițializarea GLFW
-    if (!glfwInit()) {
-        std::cerr << "Failed to initialize GLFW\n";
-        return -1;
-    }
-
+void initializeGLFW() {
+    glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+}
 
-    // Crearea ferestrei
-    int width = 800, height = 800;
+GLFWwindow* createWindow(int width, int height) {
     GLFWwindow* window = glfwCreateWindow(width, height, "Test", nullptr, nullptr);
     if (!window) {
-        std::cerr << "Failed to create GLFW window\n";
+        std::cerr << "Failed to create GLFW window.\n";
         glfwTerminate();
-        return -1;
+        exit(EXIT_FAILURE);
     }
-
     glfwMakeContextCurrent(window);
+    return window;
+}
+
+int main() {
+
+    initializeGLFW();
+    GLFWwindow* window = createWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-        std::cerr << "Failed to initialize GLAD\n";
+        std::cerr << "Failed to initialize GLAD.\n";
         glfwTerminate();
-        return -1;
+        exit(EXIT_FAILURE);
     }
 
     // Configurarea shader-ului și a dreptunghiurilor
@@ -68,36 +82,46 @@ int main() {
 
     unsigned int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
     Rectangle rectangle(1.0f, 1.0f);
-
-    // Initialize Circle
-    Circle circle(0.04f, 36);  // Create a circle with initial radius 0.5 and 36 segments
-    glfwSetWindowUserPointer(window, &circle);
-
-    int rows = matrix.size();
-    int cols = matrix[0].size();
+    Circle circle(0.04f, 36);
 
     // Loop-ul de redare
     while (!glfwWindowShouldClose(window)) {
+        int width, height;
         glfwGetFramebufferSize(window, &width, &height);
         glViewport(0, 0, width, height);
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
+        glClear(GL_COLOR_BUFFER_BIT);
 
-        float cellWidth = static_cast<float>(width) / cols;
-        float cellHeight = static_cast<float>(height) / rows;
+        // Calculate minimum dimension to maintain a square viewport
+        int viewportSize = std::min(width, height);
+        int xOffset = (width - viewportSize) / 2;
+        int yOffset = (height - viewportSize) / 2;
 
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
+        // Enable scissor test to clear only the drawing area
+        glEnable(GL_SCISSOR_TEST);
+        glScissor(xOffset, yOffset, viewportSize, viewportSize);
+        glClearColor(DRAWING_AREA_COLOR.r, DRAWING_AREA_COLOR.g, DRAWING_AREA_COLOR.b, DRAWING_AREA_COLOR.a);
+        glClear(GL_COLOR_BUFFER_BIT);
+        glDisable(GL_SCISSOR_TEST);
+
+        // Update the viewport after resizing
+        setupViewport(width, height);
+
+        float cellWidth = static_cast<float>(std::min(width, height)) / matrix[0].size();
+        float cellHeight = static_cast<float>(std::min(width, height)) / matrix.size();
+
+        for (int i = 0; i < matrix.size(); ++i) {
+            for (int j = 0; j < matrix[0].size(); ++j) {
                 if (matrix[i][j] == 1) {
                     glm::mat4 model = glm::mat4(1.0f);
                     model = glm::translate(model, glm::vec3(
-                        -1.0f + 2.0f * (j) / cols,  // Centrarea fiecărui dreptunghi
-                        1.0f - 2.0f * (i + 1.0f) / rows,  // in mijlocul celulei sale
+                        -1.0f + 2.0f * (j) / matrix[0].size(),  // Centrarea fiecărui dreptunghi
+                        1.0f - 2.0f * (i + 1.0f) / matrix.size(),  // in mijlocul celulei sale
                         0.0f
                     ));
                     model = glm::scale(model, glm::vec3(
-                        2.0f / cols,   // Scalați pentru a umple celula
-                        2.0f / rows,   // fără a depăși
+                        2.0f / matrix[0].size(),   // Scalați pentru a umple celula
+                        2.0f / matrix.size(),   // fără a depăși
                         1.0f
                     ));
 
