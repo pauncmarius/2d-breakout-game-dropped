@@ -76,14 +76,18 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    // Configurarea shader-ului și a dreptunghiurilor
     Shader shaderProgram(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource);
     shaderProgram.use();
 
+    // Obține locațiile uniformelor din shader
     unsigned int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-    Rectangle rectangle(1.0f, 1.0f);
-    Circle circle(0.04f, 36);
+    unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "color");
+    unsigned int translationLoc = glGetUniformLocation(shaderProgram.ID, "translation");
 
+    Rectangle rectangle(1.0f, 1.0f);
+    Circle circle(0.04f, 36, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.6f, 0.6f, 0.6f, 1.0f));  // inițializează cu o culoare gri
+
+    float lastTime = glfwGetTime();
     // Loop-ul de redare
     while (!glfwWindowShouldClose(window)) {
         int width, height;
@@ -127,26 +131,29 @@ int main() {
 
                     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
                     // Reset translation for the rectangle (or set a different one)
-                    glm::vec4 rectangleColor(1.0f, 0.0f, 0.0f, 1.0f); // Roșu
-                    glm::vec3 rectangleTranslation(0.0f, 0.0f, 0.0f); // No translation for rectangle
+                    glm::vec4 rectangleColor(1.0f, 1.0f, 0.0f, 1.0f); // Roșu
                     unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
-                    unsigned int rectTransLoc = glGetUniformLocation(shaderProgram.ID, "translation");
-                    glUniform3f(rectTransLoc, rectangleTranslation.x, rectangleTranslation.y, rectangleTranslation.z);
                     glUniform4f(colorLoc, rectangleColor.r, rectangleColor.g, rectangleColor.b, rectangleColor.a);
                     rectangle.draw();  // Draw the rectangle
                 }
             }
         }
-        glm::mat4 model = glm::mat4(1.0f);
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        // Resetare sau setare culoare diferită pentru bloc
-        glm::vec4 circleColor(0.0f, 0.0f, 1.0f, 1.0f); // Albastru
+        
+        float currentTime = glfwGetTime();
+        float deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
+        // Reactivăm shaderul și resetăm uniformele pentru cerc
+        shaderProgram.use();  // Reactivare shader
+
+        glm::vec3 circlePosition = glm::vec3(-0.0f, -0.9f, 0.0f);  // Poziția centrală
+        glm::vec4 circleColor = glm::vec4(0.6f, 0.6f, 0.6f, 1.0f);  // Culoare vizibilă
         unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
-        glUniform4f(colorLoc, circleColor.r, circleColor.g, circleColor.b, circleColor.a);
-        glm::vec3 circleTranslation(0.0f, -0.9f, 0.0f); // Move circle to bottom center
-        unsigned int circleTransLoc = glGetUniformLocation(shaderProgram.ID, "translation");
-        glUniform3f(circleTransLoc, circleTranslation.x, circleTranslation.y, circleTranslation.z);
-        circle.draw();  // Draw the circle
+		glUniform4f(colorLoc, circleColor.r, circleColor.g, circleColor.b, circleColor.a);
+        glUniform3fv(translationLoc, 1, glm::value_ptr(circlePosition));
+        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));  // Matricea de model la identitate
+
+        circle.draw();  // Desenează cercul
 
         glfwSwapBuffers(window);
         glfwPollEvents();

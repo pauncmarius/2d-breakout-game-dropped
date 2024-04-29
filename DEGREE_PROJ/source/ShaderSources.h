@@ -7,6 +7,7 @@ namespace ShaderSources {
     inline const char* vertexShaderSource = R"glsl(
         #version 330 core
         layout (location = 0) in vec3 aPos;
+
         uniform mat4 model;
         uniform vec3 translation; // Transformation uniform for moving objects
 
