@@ -8,23 +8,20 @@
 
 class Circle {
 public:
-    Circle(float radius, int segments, glm::vec3 initialPosition, glm::vec4 color);
+    Circle(float radius, int segments, glm::vec3 newVelocity);
     ~Circle();
 
     void draw();
-    void setRadius(float newRadius);
-    void setPosition(glm::vec3 newPosition);
-    void setColor(glm::vec4 newColor);
-    glm::vec3 getPosition() const;
-    glm::vec4 getColor() const;
+    void update(float deltaTime);
 
 private:
+    glm::vec3 velocity;  // Add velocity attribute
     float radius;
     int segments;
     std::vector<float> vertices;
     GLuint VAO, VBO;
     glm::vec3 position;
-    glm::vec4 color;  // Culoarea cercului
+    const double PI = 3.14159265358979323846;
 
     void setupCircle();
     void updateVertices();

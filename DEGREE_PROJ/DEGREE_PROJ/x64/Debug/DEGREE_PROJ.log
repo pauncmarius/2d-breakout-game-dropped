@@ -1,7 +1,16 @@
-﻿  main.cpp
+﻿  glad.c
+  Circle.cpp
+C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\Circle.cpp(26,26): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  main.cpp
 C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\ShaderSources.h(22,1): warning C4566: character represented by universal-character-name '\u0103' cannot be represented in the current code page (1252)
   (compiling source file 'source/main.cpp')
   
 C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(90,20): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(142,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\main.cpp(94,27): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Shader.cpp
+  ShaderSources.h
+C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\source\ShaderSources.h(22,1): warning C4566: character represented by universal-character-name '\u0103' cannot be represented in the current code page (1252)
+  Rectangle.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   DEGREE_PROJ.vcxproj -> C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\x64\Debug\DEGREE_PROJ.exe

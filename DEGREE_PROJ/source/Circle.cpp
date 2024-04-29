@@ -1,8 +1,8 @@
 ﻿#include "Circle.h"
 #include <cmath>
 
-Circle::Circle(float radius, int segments, glm::vec3 initialPosition, glm::vec4 color)
-    : radius(radius), segments(segments), position(initialPosition), color(color), VAO(0), VBO(0) {
+Circle::Circle(float radius, int segments, glm::vec3 newVelocity)
+    : radius(radius), segments(segments), VAO(0), VBO(0), velocity(newVelocity) {
     setupCircle();
 }
 
@@ -17,35 +17,13 @@ void Circle::draw() {
     glBindVertexArray(0);
 }
 
-void Circle::setRadius(float newRadius) {
-    radius = newRadius;
-    updateVertices();
-}
-
-void Circle::setPosition(glm::vec3 newPosition) {
-    position = newPosition;
-    updateVertices();
-}
-
-void Circle::setColor(glm::vec4 newColor) {
-    color = newColor;
-}
-
-glm::vec3 Circle::getPosition() const {
-    return position;
-}
-
-glm::vec4 Circle::getColor() const {
-    return color;
-}
-
 void Circle::updateVertices() {
     vertices.clear();
     vertices.push_back(position.x);  // Centru x
     vertices.push_back(position.y);  // Centru y
     vertices.push_back(0.0f);        // Centru z
 
-    float angleIncrement = 2.0f * 3.14f / segments;
+    float angleIncrement = 2.0f * PI / segments;
     for (int i = 0; i <= segments; i++) {
         float angle = i * angleIncrement;
         vertices.push_back(position.x + radius * cos(angle)); // x
@@ -71,3 +49,25 @@ void Circle::setupCircle() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
+
+void Circle::update(float deltaTime) {
+    // Move the circle
+    position += velocity * deltaTime;
+
+    // Check for boundary collisions and correct
+    if (position.x - radius < -1.0f) {
+        velocity.x = -velocity.x;  // Reverse horizontal velocity
+    }
+    if (position.x + radius > 1.0f) {
+        velocity.x = -velocity.x;
+    }
+    if (position.y - radius < -1.0f) {
+        velocity.y = -velocity.y;  // Reverse vertical velocity
+    }
+    if (position.y + radius > 1.0f) {
+        velocity.y = -velocity.y;
+    }
+
+    updateVertices();  // Update the vertex buffer with new position
+}
+

@@ -12,7 +12,7 @@
 #include "Circle.h"
 
 // Constante pentru dimensiuni și culori
-const int WINDOW_WIDTH = 800;
+const int WINDOW_WIDTH = 850;
 const int WINDOW_HEIGHT = 800;
 const glm::vec4 BACKGROUND_COLOR(0.2f, 0.3f, 0.3f, 1.0f);
 const glm::vec4 DRAWING_AREA_COLOR(0.1f, 0.1f, 0.1f, 1.0f);
@@ -85,35 +85,37 @@ int main() {
     unsigned int translationLoc = glGetUniformLocation(shaderProgram.ID, "translation");
 
     Rectangle rectangle(1.0f, 1.0f);
-    Circle circle(0.04f, 36, glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4(0.6f, 0.6f, 0.6f, 1.0f));  // inițializează cu o culoare gri
+    Circle circle(0.04f, 36, glm::vec3(0.5f, 0.5f, 0.0f));  // inițializează cu o culoare gri
 
     float lastTime = glfwGetTime();
     // Loop-ul de redare
     while (!glfwWindowShouldClose(window)) {
         int width, height;
+        float currentTime = glfwGetTime();
+        float deltaTime = currentTime - lastTime;
+        lastTime = currentTime;
+
         glfwGetFramebufferSize(window, &width, &height);
         glViewport(0, 0, width, height);
         glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Calculate minimum dimension to maintain a square viewport
+
         int viewportSize = std::min(width, height);
         int xOffset = (width - viewportSize) / 2;
         int yOffset = (height - viewportSize) / 2;
 
-        // Enable scissor test to clear only the drawing area
         glEnable(GL_SCISSOR_TEST);
         glScissor(xOffset, yOffset, viewportSize, viewportSize);
         glClearColor(DRAWING_AREA_COLOR.r, DRAWING_AREA_COLOR.g, DRAWING_AREA_COLOR.b, DRAWING_AREA_COLOR.a);
         glClear(GL_COLOR_BUFFER_BIT);
         glDisable(GL_SCISSOR_TEST);
 
-        // Update the viewport after resizing
         setupViewport(width, height);
 
+        //blocuri
         float cellWidth = static_cast<float>(std::min(width, height)) / matrix[0].size();
         float cellHeight = static_cast<float>(std::min(width, height)) / matrix.size();
-
         for (int i = 0; i < matrix.size(); ++i) {
             for (int j = 0; j < matrix[0].size(); ++j) {
                 if (matrix[i][j] == 1) {
@@ -130,23 +132,17 @@ int main() {
                     ));
 
                     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-                    // Reset translation for the rectangle (or set a different one)
                     glm::vec4 rectangleColor(1.0f, 1.0f, 0.0f, 1.0f); // Roșu
                     unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
                     glUniform4f(colorLoc, rectangleColor.r, rectangleColor.g, rectangleColor.b, rectangleColor.a);
-                    rectangle.draw();  // Draw the rectangle
+                    rectangle.draw();
                 }
             }
         }
-        
-        float currentTime = glfwGetTime();
-        float deltaTime = currentTime - lastTime;
-        lastTime = currentTime;
 
-        // Reactivăm shaderul și resetăm uniformele pentru cerc
-        shaderProgram.use();  // Reactivare shader
-
-        glm::vec3 circlePosition = glm::vec3(-0.0f, -0.9f, 0.0f);  // Poziția centrală
+        circle.update(deltaTime);
+        //minge
+        glm::vec3 circlePosition = glm::vec3(0.0f, -0.9f, 0.0f);  // Poziția centrală
         glm::vec4 circleColor = glm::vec4(0.6f, 0.6f, 0.6f, 1.0f);  // Culoare vizibilă
         unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
 		glUniform4f(colorLoc, circleColor.r, circleColor.g, circleColor.b, circleColor.a);
