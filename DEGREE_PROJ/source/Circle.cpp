@@ -51,23 +51,23 @@ void Circle::setupCircle() {
 }
 
 void Circle::update(float deltaTime) {
-    // Move the circle
+
     position += velocity * deltaTime;
 
-    // Check for boundary collisions and correct
+
     if (position.x - radius < -1.0f) {
-        velocity.x = -velocity.x;  // Reverse horizontal velocity
+        velocity.x = -velocity.x;
     }
     if (position.x + radius > 1.0f) {
         velocity.x = -velocity.x;
     }
-    if (position.y - radius < -1.0f) {
-        velocity.y = -velocity.y;  // Reverse vertical velocity
+    if (position.y - radius < -0.1f) {
+        velocity.y = -velocity.y;
     }
-    if (position.y + radius > 1.0f) {
+    if (position.y + radius > 1.9f) {
         velocity.y = -velocity.y;
     }
 
-    updateVertices();  // Update the vertex buffer with new position
+    updateVertices();
 }
 
