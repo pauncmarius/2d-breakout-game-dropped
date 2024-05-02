@@ -3,7 +3,6 @@
 #define SHADER_SOURCES_H
 
 namespace ShaderSources {
-    // Define shader sources directly in the header
     inline const char* vertexShaderSource = R"glsl(
         #version 330 core
         layout (location = 0) in vec3 aPos;

@@ -16,9 +16,10 @@ const int WINDOW_WIDTH = 850;
 const int WINDOW_HEIGHT = 800;
 const glm::vec4 BACKGROUND_COLOR(0.2f, 0.3f, 0.3f, 1.0f);
 const glm::vec4 DRAWING_AREA_COLOR(0.1f, 0.1f, 0.1f, 1.0f);
+bool isPaused = false;
 
 std::vector<std::vector<int>> matrix = {
-    {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
+    {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
     {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
     {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
     {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
@@ -38,6 +39,10 @@ std::vector<std::vector<int>> matrix = {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    isPaused = true;
+}
 
 void setupViewport(int width, int height) {
     int viewportSize = std::min(width, height);
@@ -69,6 +74,7 @@ int main() {
 
     initializeGLFW();
     GLFWwindow* window = createWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD.\n";
@@ -99,7 +105,6 @@ int main() {
         glViewport(0, 0, width, height);
         glClearColor(BACKGROUND_COLOR.r, BACKGROUND_COLOR.g, BACKGROUND_COLOR.b, BACKGROUND_COLOR.a);
         glClear(GL_COLOR_BUFFER_BIT);
-
 
         int viewportSize = std::min(width, height);
         int xOffset = (width - viewportSize) / 2;
@@ -132,15 +137,13 @@ int main() {
                     ));
 
                     glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-                    glm::vec4 rectangleColor(1.0f, 1.0f, 0.0f, 1.0f); // Roșu
+                    glm::vec4 rectangleColor(1.0f, 1.0f, 0.0f, 1.0f); // galben
                     unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
                     glUniform4f(colorLoc, rectangleColor.r, rectangleColor.g, rectangleColor.b, rectangleColor.a);
                     rectangle.draw();
                 }
             }
         }
-
-        circle.update(deltaTime);
         //minge
         glm::vec3 circlePosition = glm::vec3(0.0f, -0.9f, 0.0f);  // Poziția centrală
         glm::vec4 circleColor = glm::vec4(0.6f, 0.6f, 0.6f, 1.0f);  // Culoare vizibilă
@@ -149,6 +152,7 @@ int main() {
         glUniform3fv(translationLoc, 1, glm::value_ptr(circlePosition));
         glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));  // Matricea de model la identitate
 
+        circle.update(deltaTime, isPaused);
         circle.draw();  // Desenează cercul
 
         glfwSwapBuffers(window);

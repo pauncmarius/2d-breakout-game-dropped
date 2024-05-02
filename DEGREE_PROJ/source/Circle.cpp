@@ -28,7 +28,7 @@ void Circle::updateVertices() {
         float angle = i * angleIncrement;
         vertices.push_back(position.x + radius * cos(angle)); // x
         vertices.push_back(position.y + radius * sin(angle)); // y
-        vertices.push_back(0.0f);                             // z
+        vertices.push_back(0.0f);                                 // z
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -50,10 +50,11 @@ void Circle::setupCircle() {
     glBindVertexArray(0);
 }
 
-void Circle::update(float deltaTime) {
+void Circle::update(float deltaTime, bool isPaused) {
 
-    position += velocity * deltaTime;
-
+	if (!isPaused) {
+        position += velocity * deltaTime;
+	}
 
     if (position.x - radius < -1.0f) {
         velocity.x = -velocity.x;
@@ -67,7 +68,6 @@ void Circle::update(float deltaTime) {
     if (position.y + radius > 1.9f) {
         velocity.y = -velocity.y;
     }
-
     updateVertices();
 }
 

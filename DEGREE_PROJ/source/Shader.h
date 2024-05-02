@@ -7,19 +7,14 @@
 
 class Shader {
 public:
-    unsigned int ID;  // Shader program ID
+    unsigned int ID;
 
-    // Constructor that builds the shader program from shader source code strings
     Shader(const char* vertexCode, const char* fragmentCode);
-
-    // Destructor
     ~Shader();
 
-    // Use/activate the shader program
     void use();
 
 private:
-    // Utility method for checking shader compilation/linking errors.
     void checkCompileErrors(unsigned int shader, const std::string& type);
 };
 

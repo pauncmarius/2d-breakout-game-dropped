@@ -12,10 +12,10 @@ public:
     ~Circle();
 
     void draw();
-    void update(float deltaTime);
+    void update(float deltaTime, bool isPaused);
 
 private:
-    glm::vec3 velocity;  // Add velocity attribute
+    glm::vec3 velocity;
     float radius;
     int segments;
     std::vector<float> vertices;

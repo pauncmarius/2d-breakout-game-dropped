@@ -6,7 +6,7 @@ Shader::Shader(const char* vertexCode, const char* fragmentCode) {
     static bool firstTime = true;
     if (firstTime) {
         std::cout << "Creating Shader..." << std::endl;
-        firstTime = false; // Set false to avoid repeating this message
+        firstTime = false;
     }
 
     // Compile shaders
@@ -21,7 +21,7 @@ Shader::Shader(const char* vertexCode, const char* fragmentCode) {
     glCompileShader(fragment);
     checkCompileErrors(fragment, "FRAGMENT");
 
-    // Linking shaders into a program
+
     ID = glCreateProgram();
     glAttachShader(ID, vertex);
     glAttachShader(ID, fragment);
@@ -40,7 +40,7 @@ void Shader::use() {
     static bool firstUse = true;
     if (firstUse) {
         std::cout << "Using Shader program ID: " << ID << std::endl;
-        firstUse = false; // Set false to avoid repeating this message
+        firstUse = false; 
     }
     glUseProgram(ID);
 }
