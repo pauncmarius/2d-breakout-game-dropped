@@ -22,6 +22,7 @@ bool isPaused = false;
 PauseScreen pauseScreen;
 
 std::vector<std::vector<int>> matrix = {
+    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
     {0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0},
     {1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1},
@@ -101,7 +102,7 @@ int main() {
 
     // Obține locațiile uniformelor din shader
     unsigned int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
-    unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "color");
+    unsigned int colorLoc = glGetUniformLocation(shaderProgram.ID, "objectColor");
     unsigned int translationLoc = glGetUniformLocation(shaderProgram.ID, "translation");
 
     Rectangle rectangle(1.0f, 1.0f);
