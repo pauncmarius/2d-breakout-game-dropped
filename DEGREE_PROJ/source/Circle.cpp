@@ -62,10 +62,10 @@ void Circle::update(float deltaTime, bool isPaused) {
     if (position.x + radius > 1.0f) {
         velocity.x = -velocity.x;
     }
-    if (position.y - radius < -0.1f) {
+    if (position.y - radius < -1.0f) {
         velocity.y = -velocity.y;
     }
-    if (position.y + radius > 1.9f) {
+    if (position.y + radius > 1.0f) {
         velocity.y = -velocity.y;
     }
     updateVertices();

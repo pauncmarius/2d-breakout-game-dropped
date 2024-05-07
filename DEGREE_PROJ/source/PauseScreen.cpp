@@ -32,8 +32,8 @@ void PauseScreen::setup() {
 
 void PauseScreen::draw() {
     shader->use();
-    int colorLoc = glGetUniformLocation(shader->ID, "overlayColor");
-    glUniform4f(colorLoc, 0.5f, 0.5f, 0.5f, 0.1f);  // Semi-transparent gray
+    int colorLoc = glGetUniformLocation(shader->ID, "objectColor");
+    glUniform4f(colorLoc, 0.5f, 0.5f, 0.5f, 0.7f);  // Semi-transparent gray
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
