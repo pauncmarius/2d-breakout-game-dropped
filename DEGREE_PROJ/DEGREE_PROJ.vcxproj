@@ -25,12 +25,14 @@
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
     </ClCompile>
+    <ClCompile Include="source\PauseScreen.cpp" />
     <ClCompile Include="source\Shader.cpp" />
     <ClCompile Include="source\ShaderSources.h" />
     <ClCompile Include="source\Rectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Circle.h" />
+    <ClInclude Include="source\PauseScreen.h" />
     <ClInclude Include="source\Shader.h" />
     <ClInclude Include="source\Rectangle.h" />
   </ItemGroup>

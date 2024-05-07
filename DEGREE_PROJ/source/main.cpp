@@ -10,6 +10,7 @@
 #include <vector>
 #include "ShaderSources.h"
 #include "Circle.h"
+#include "PauseScreen.h"
 
 // Constante pentru dimensiuni și culori
 const int WINDOW_WIDTH = 850;
@@ -17,6 +18,8 @@ const int WINDOW_HEIGHT = 800;
 const glm::vec4 BACKGROUND_COLOR(0.2f, 0.3f, 0.3f, 1.0f);
 const glm::vec4 DRAWING_AREA_COLOR(0.1f, 0.1f, 0.1f, 1.0f);
 bool isPaused = false;
+
+PauseScreen pauseScreen;
 
 std::vector<std::vector<int>> matrix = {
     {1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
@@ -39,6 +42,13 @@ std::vector<std::vector<int>> matrix = {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS && isPaused) {
+        isPaused = false;  // Resume the game when space is pressed    
+    }
+}
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     isPaused = true;
@@ -74,7 +84,9 @@ int main() {
 
     initializeGLFW();
     GLFWwindow* window = createWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
+    
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetKeyCallback(window, key_callback);
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD.\n";
@@ -84,6 +96,8 @@ int main() {
 
     Shader shaderProgram(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource);
     shaderProgram.use();
+
+    pauseScreen.setup();
 
     // Obține locațiile uniformelor din shader
     unsigned int modelLoc = glGetUniformLocation(shaderProgram.ID, "model");
@@ -155,10 +169,15 @@ int main() {
         circle.update(deltaTime, isPaused);
         circle.draw();  // Desenează cercul
 
+        if (isPaused) {
+            pauseScreen.draw();
+        }
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
 
+    //pauseScreen.cleanup();
     glfwTerminate();
     return 0;
 }
