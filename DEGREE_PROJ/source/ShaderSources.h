@@ -19,12 +19,41 @@ namespace ShaderSources {
     inline const char* fragmentShaderSource = R"glsl(
         #version 330 core
         out vec4 FragColor;
-        uniform vec4 objectColor; // Adaugă o uniformă pentru culoare
+        uniform vec4 objectColor;
 
         void main() {
             FragColor = objectColor;
         }
     )glsl";
+
+    inline const char* vertexTextShaderSource = R"glsl(
+    #version 330 core
+    layout (location = 0) in vec4 vertex; // <vec2 position, vec2 texCoords>
+    out vec2 TexCoords;
+
+    uniform mat4 projection;
+
+    void main() {
+        gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
+        TexCoords = vertex.zw;
+    }
+)glsl";
+
+    inline const char* fragmentTextShaderSource = R"glsl(
+    #version 330 core
+    in vec2 TexCoords;
+    out vec4 FragColor;
+
+    uniform sampler2D text;
+    uniform vec3 textColor;
+
+    void main() {
+        vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
+        FragColor = vec4(textColor, 1.0) * sampled;
+    }
+)glsl";
+
+
 }
 
 #endif // SHADER_SOURCES_H

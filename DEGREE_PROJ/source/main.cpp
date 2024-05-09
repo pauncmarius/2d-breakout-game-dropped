@@ -11,6 +11,7 @@
 #include "ShaderSources.h"
 #include "Circle.h"
 #include "PauseScreen.h"
+#include "TextRenderer.h"
 
 // Constante pentru dimensiuni și culori
 const int WINDOW_WIDTH = 850;
@@ -97,7 +98,6 @@ int main() {
 
     Shader shaderProgram(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource);
     shaderProgram.use();
-
     pauseScreen.setup();
 
     // Obține locațiile uniformelor din shader
@@ -178,7 +178,6 @@ int main() {
         glfwPollEvents();
     }
 
-    //pauseScreen.cleanup();
     glfwTerminate();
     return 0;
 }

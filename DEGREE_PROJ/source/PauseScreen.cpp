@@ -1,5 +1,10 @@
 ﻿#include "PauseScreen.h"
 #include "ShaderSources.h"
+#define GLT_IMPLEMENTATION
+#include "gltext.h"
+
+GLTtext* pauseText;
+
 
 PauseScreen::PauseScreen() : VAO(0), VBO(0), shader(nullptr) {
 }
@@ -11,6 +16,7 @@ PauseScreen::~PauseScreen() {
 void PauseScreen::setup() {
 
     shader = new Shader(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource);
+    
 
     float vertices[] = {
         -1.0f, -1.0f,  // Bottom Left
@@ -31,9 +37,9 @@ void PauseScreen::setup() {
 }
 
 void PauseScreen::draw() {
+
     shader->use();
-    int colorLoc = glGetUniformLocation(shader->ID, "objectColor");
-    glUniform4f(colorLoc, 0.5f, 0.5f, 0.5f, 0.7f);  // Semi-transparent gray
+    glUniform4f(glGetUniformLocation(shader->ID, "objectColor"), 0.5f, 0.5f, 0.5f, 0.7f);  // Semi-transparent gray
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -41,19 +47,15 @@ void PauseScreen::draw() {
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     glBindVertexArray(0);
+    
     glDisable(GL_BLEND);
 }
 
 void PauseScreen::cleanup() {
     if (shader) {
         delete shader;
+        shader = nullptr;
     }
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-}
-
-void PauseScreen::hide() {
-    glUseProgram(0);  // Dezactivează shaderul folosit pentru ecranul de pauză
-    glBindVertexArray(0);  // Unbind any VAOs
-    // Alte curățări necesare pentru a ascunde ecranul de pauză
 }

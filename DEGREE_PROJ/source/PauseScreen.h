@@ -6,6 +6,7 @@
 #include <glm/glm.hpp>
 #include <iostream>
 #include "Shader.h"
+#include "TextRenderer.h"
 
 class PauseScreen {
 public:
@@ -15,7 +16,6 @@ public:
     void setup();
     void draw();
     void cleanup();
-    void hide();  // Ascunde ecranul de pauză
 
 private:
     GLuint VAO, VBO;
