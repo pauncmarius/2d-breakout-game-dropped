@@ -10,7 +10,7 @@
 
 class PauseScreen {
 public:
-    PauseScreen();
+    PauseScreen(GLuint width, GLuint height);
     ~PauseScreen();
 
     void setup();
@@ -19,7 +19,9 @@ public:
 
 private:
     GLuint VAO, VBO;
-    Shader* shader;  // Use pointer to Shader class
+    Shader shader;  // Use pointer to Shader class
+    GLuint screenWidth, screenHeight;
+    TextRenderer* textRenderer;
 };
 
 #endif // PAUSE_SCREEN_H

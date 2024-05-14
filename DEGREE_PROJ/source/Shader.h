@@ -10,9 +10,10 @@
 
 class Shader {
 public:
-    unsigned int ID;
+    GLuint ID;
 
-    Shader(const char* vertexCode, const char* fragmentCode);
+    Shader() { }
+    Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
     ~Shader();
 
     void use();

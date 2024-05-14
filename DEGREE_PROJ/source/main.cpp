@@ -14,13 +14,11 @@
 #include "TextRenderer.h"
 
 // Constante pentru dimensiuni și culori
-const int WINDOW_WIDTH = 850;
-const int WINDOW_HEIGHT = 800;
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
 const glm::vec4 BACKGROUND_COLOR(0.2f, 0.3f, 0.3f, 1.0f);
 const glm::vec4 DRAWING_AREA_COLOR(0.1f, 0.1f, 0.1f, 1.0f);
 bool isPaused = false;
-
-PauseScreen pauseScreen;
 
 std::vector<std::vector<int>> matrix = {
     {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -96,8 +94,11 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
+    std::cout << "Initializing shaderProgram...\n";
     Shader shaderProgram(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource);
     shaderProgram.use();
+
+    PauseScreen pauseScreen(WINDOW_WIDTH, WINDOW_HEIGHT);
     pauseScreen.setup();
 
     // Obține locațiile uniformelor din shader
@@ -171,6 +172,7 @@ int main() {
         circle.draw();  // Desenează cercul
 
         if (isPaused) {
+
             pauseScreen.draw();
         }
 

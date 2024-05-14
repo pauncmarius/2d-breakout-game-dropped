@@ -91,10 +91,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\nanovg;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\nanovg;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -130,14 +130,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glad\include;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glfw-3.4.bin.WIN64\include;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glm;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glText-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glad\include;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glfw-3.4.bin.WIN64\include;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glm;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\freetype;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glfw-3.4.bin.WIN64\lib-vc2022;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\freetype;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -148,7 +148,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glad\include;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glfw-3.4.bin.WIN64\include;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glm;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glText-master;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glad\include;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glfw-3.4.bin.WIN64\include;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glm;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\freetype;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -156,8 +156,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glfw-3.4.bin.WIN64\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\glfw-3.4.bin.WIN64\lib-vc2022;C:\Users\paunm\Documents\github\degree-project\DEGREE_PROJ\libraries\freetype;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;user32.lib;gdi32.lib;shell32.lib;freetyped.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

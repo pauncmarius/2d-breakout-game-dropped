@@ -28,29 +28,31 @@ namespace ShaderSources {
 
     inline const char* vertexTextShaderSource = R"glsl(
     #version 330 core
-    layout (location = 0) in vec4 vertex; // <vec2 position, vec2 texCoords>
+    layout (location = 0) in vec4 vertex; // <vec2 pos, vec2 tex>
     out vec2 TexCoords;
 
     uniform mat4 projection;
 
-    void main() {
+    void main()
+    {
         gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
         TexCoords = vertex.zw;
-    }
+} 
 )glsl";
 
     inline const char* fragmentTextShaderSource = R"glsl(
     #version 330 core
     in vec2 TexCoords;
-    out vec4 FragColor;
+    out vec4 color;
 
     uniform sampler2D text;
     uniform vec3 textColor;
 
-    void main() {
+    void main()
+    {    
         vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
-        FragColor = vec4(textColor, 1.0) * sampled;
-    }
+        color = vec4(textColor, 1.0) * sampled;
+    } 
 )glsl";
 
 

@@ -2,7 +2,7 @@
 #include "Shader.h"
 
 
-Shader::Shader(const char* vertexCode, const char* fragmentCode) {
+Shader::Shader(const GLchar* vertexPath, const GLchar* fragmentPath) {
     static bool firstTime = true;
     if (firstTime) {
         std::cout << "Creating Shader..." << std::endl;
@@ -12,12 +12,12 @@ Shader::Shader(const char* vertexCode, const char* fragmentCode) {
     // Compile shaders
     unsigned int vertex, fragment;
     vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vertexCode, NULL);
+    glShaderSource(vertex, 1, &vertexPath, NULL);
     glCompileShader(vertex);
     checkCompileErrors(vertex, "VERTEX");
 
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &fragmentCode, NULL);
+    glShaderSource(fragment, 1, &fragmentPath, NULL);
     glCompileShader(fragment);
     checkCompileErrors(fragment, "FRAGMENT");
 
@@ -43,7 +43,7 @@ void Shader::use() {
         std::cout << "Using Shader program ID: " << ID << std::endl;
         firstUse = false; 
     }
-    glUseProgram(ID);
+    glUseProgram(this->ID);
 }
 
 

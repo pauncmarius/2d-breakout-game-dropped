@@ -1,12 +1,11 @@
 ﻿#include "PauseScreen.h"
 #include "ShaderSources.h"
-#define GLT_IMPLEMENTATION
-#include "gltext.h"
-
-GLTtext* pauseText;
 
 
-PauseScreen::PauseScreen() : VAO(0), VBO(0), shader(nullptr) {
+PauseScreen::PauseScreen(unsigned int width, unsigned int height) : shader(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource), VAO(0), VBO(0), screenWidth(width), screenHeight(height) {
+    textRenderer = new TextRenderer(width, height);
+    textRenderer->Load("source/res/OCRAEXT.TTF", 24);
+    std::cout<<"Font loaded!"<<std::endl;
 }
 
 PauseScreen::~PauseScreen() {
@@ -14,9 +13,6 @@ PauseScreen::~PauseScreen() {
 }
 
 void PauseScreen::setup() {
-
-    shader = new Shader(ShaderSources::vertexShaderSource, ShaderSources::fragmentShaderSource);
-    
 
     float vertices[] = {
         -1.0f, -1.0f,  // Bottom Left
@@ -38,8 +34,8 @@ void PauseScreen::setup() {
 
 void PauseScreen::draw() {
 
-    shader->use();
-    glUniform4f(glGetUniformLocation(shader->ID, "objectColor"), 0.5f, 0.5f, 0.5f, 0.7f);  // Semi-transparent gray
+    shader.use();
+    glUniform4f(glGetUniformLocation(shader.ID, "objectColor"), 0.5f, 0.5f, 0.5f, 0.7f);  // Semi-transparent gray
 
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -47,15 +43,12 @@ void PauseScreen::draw() {
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     glBindVertexArray(0);
-    
+
+    textRenderer->RenderText("Pause", screenWidth / 2.0f - 50.0f, screenHeight / 2.0f, 1.0f, glm::vec3(1.0f, 1.0f, 1.0f));
     glDisable(GL_BLEND);
 }
 
 void PauseScreen::cleanup() {
-    if (shader) {
-        delete shader;
-        shader = nullptr;
-    }
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 }
